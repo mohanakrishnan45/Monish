@@ -1,0 +1,118 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
+
+class Course {
+    private String code;
+    private String title;
+    private int capacity;
+    private int enrolledStudents;
+
+    public Course(String code, String title, int capacity) {
+        this.code = code;
+        this.title = title;
+        this.capacity = capacity;
+        this.enrolledStudents = 0;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public boolean registerStudent() {
+        if (enrolledStudents < capacity) {
+            enrolledStudents++;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void dropStudent() {
+        enrolledStudents--;
+    }
+}
+
+public class CourseRegistrationSystem {
+    private List<Course> courses;
+
+    public CourseRegistrationSystem() {
+        courses = new ArrayList<>();
+    }
+
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
+    public void listCourses() {
+        System.out.println("Course Listing details::");
+        for (Course course : courses) {
+            System.out.println("Course Code: " + course.getCode());
+            System.out.println("Title: " + course.getTitle());
+            System.out.println("Capacity: " + course.getCapacity());
+            System.out.println("Enrolled Students: " + course.getEnrolledStudents());
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        CourseRegistrationSystem registrationSystem = new CourseRegistrationSystem();
+
+        Course MA3354 = new Course("MA3354", "Discrete Mathematics", 50);
+        Course CS3452 = new Course("CS3452", "Theory of Computations", 40);
+        Course CS3401 = new Course("CS3401", "Algorithms", 25);
+
+        registrationSystem.addCourse(MA3354);
+        registrationSystem.addCourse(CS3452);
+        registrationSystem.addCourse(CS3401);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Course Registration System!");
+
+        while (true) {
+            System.out.println("\n1. List Courses\n2. Register for your Course\n3. exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                registrationSystem.listCourses();
+            } else if (choice == 2) {
+                System.out.print("Enter the course code to register: ");
+                String courseCode = scanner.next();
+                Course selectedCourse = null;
+                for (Course course : registrationSystem.courses) {
+                    if (course.getCode().equalsIgnoreCase(courseCode)) {
+                        selectedCourse = course;
+                        break;
+                    }
+                }
+                if (selectedCourse != null) {
+                    if (selectedCourse.registerStudent()) {
+                        System.out.println("Successfully registered for course: " + selectedCourse.getCode());
+                    } else {
+                        System.out.println("Sorry, the course is full.");
+                    }
+                } else {
+                    System.out.println("Invalid course code.");
+                }
+            } else if (choice == 3) {
+                System.out.println("register for  your codSoft  internship . Goodbye!");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
