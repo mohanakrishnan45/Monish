@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Student {
+    private String name;
+    private int[] marks;
+
+    public Student(String name, int numOfSubjects) {
+        this.name = name;
+        this.marks = new int[numOfSubjects];
+    }
+
+    public void inputMarks(Scanner scanner) {
+        System.out.println("Enter marks obtained in each subject (out of 100) : ");
+        for (int i = 0; i < marks.length; i++) {
+            System.out.print("Subject " + (i + 1) + ": ");
+            marks[i] = scanner.nextInt();
+        }
+    }
+
+    public int[] getMarks() {
+        return marks;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class GradeCalculator {
+    public static int calculateTotalMarks(int[] marks) {
+        int total = 0;
+        for (int mark : marks) {
+            total += mark;
+        }
+        return total;
+    }
+
+    public static double calculateAveragePercentage(int totalMarks, int numOfSubjects) {
+        return (double) totalMarks / numOfSubjects;
+    }
+
+    public static char calculateGrade(double average) {
+        if (average >= 90) {
+            return 'A';
+        } else if (average >= 80) {
+            return 'B';
+        }
+          else if (average >= 70) {
+            return 'C';
+        } else if (average >= 60) {
+            return 'D';
+        } else {
+            return 'U';
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner Obj = new Scanner(System.in);
+        System.out.print("Enter student name: ");
+        String name = Obj.nextLine();
+        System.out.print("Enter number of subjects: ");
+        int numOfSubjects = Obj.nextInt();
+        Student student = new Student(name, numOfSubjects);
+        student.inputMarks(Obj);
+
+                int totalMarks = GradeCalculator.calculateTotalMarks(student.getMarks());
+                double averagePercentage = GradeCalculator.calculateAveragePercentage(totalMarks, numOfSubjects);
+        char grade = GradeCalculator.calculateGrade(averagePercentage);
+        System.out.println("\nResults for " + student.getName() + ":");
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Percentage:"
+         +averagePercentage);
+        System.out.println("Grade: " + grade);
+
+        Obj.close();
+    }
+}
